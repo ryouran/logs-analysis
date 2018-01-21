@@ -1,4 +1,4 @@
-#Logs Analysis
+# Logs Analysis
 This project was completed for [Udacity's Full Stack Web Developer Nanodegree program](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
 ## Project Overview
@@ -18,8 +18,8 @@ This project is to write a Python program which uses `psycopg2` module to connec
 ### Load the data	
 1. Click [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) to dowlonad newsdata.zip.
 2. Unzip the file and place newsdata.sql into the vagrant directory which is shared with the vagrant virtual machine. 
-3. Run 'vagrant up' to launch the virtual machine from the vagrant directory.
-4. Run 'vagrant ssh' to log in.
+3. Run `vagrant up` to launch the virtual machine from the vagrant directory.
+4. Run `vagrant ssh` to log in.
 5. Change the directory to vagrant.
 6. Use the command to load the data.
 `psql -d news -f newsdata.sql`
@@ -29,5 +29,5 @@ This project is to write a Python program which uses `psycopg2` module to connec
 2. Use the command `python reporting_tool.py' to run the program.
 
 
-##Test Environment
+### Test Environment
 * Python 2.7.14
