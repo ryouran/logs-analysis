@@ -26,7 +26,7 @@ This project is to write a Python program which uses `psycopg2` module to connec
 
 ### Run the program
 1. Run the vagrant virtual machine and log in as described above if not running
-2. Use the command `python reporting_tool.py' to run the program.
+2. Use the command `python reporting_tool.py` to run the program.
 
 
 ### Test Environment
