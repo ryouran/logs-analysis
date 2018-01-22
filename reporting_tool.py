@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""Log Anaylsys Project.
+
+This module gets data from database and print out formatted results.
+"""
+
 import psycopg2
 import time
 from datetime import datetime
@@ -8,11 +13,8 @@ DBName = "news"
 
 
 def get_top_three_articles():
+    """Connect to a database and get the most popular three articles."""
     db, c = connect_database()
-
-    '''
-        get the most popular three articles of all time
-    '''
 
     query = ("select articles.title, count(*) as num from articles, log " +
              "where articles.slug = split_part(log.path,  '/article/', 2)" +
@@ -24,11 +26,8 @@ def get_top_three_articles():
 
 
 def show_top_three_articles():
+    """Format result and show top three articles with heading."""
     rows = get_top_three_articles()
-
-    '''
-        format result and show top three articles with heading
-    '''
 
     print "Top Three Articles "
     print "---------------------"
@@ -39,11 +38,8 @@ def show_top_three_articles():
 
 
 def get_popular_article_authors():
+    """Connect to a database and get most popular article authors."""
     db, c = connect_database()
-
-    '''
-        get most popular article authors of all time
-    '''
 
     query = ("select authors.name, count(*) as num from articles, authors, " +
              " log where articles.author = authors.id and articles.slug = " +
@@ -56,11 +52,8 @@ def get_popular_article_authors():
 
 
 def show_popular_article_authors():
+    """Format result and show most popular article authors with heading."""
     rows = get_popular_article_authors()
-
-    '''
-        format result and show most popular article authors with heading
-    '''
 
     print "Most Popular Article Authors "
     print "-----------------------------"
@@ -71,11 +64,8 @@ def show_popular_article_authors():
 
 
 def get_high_error_rate_info():
+    """Connect to a database and get date and error rate (>0.01)."""
     db, c = connect_database()
-
-    '''
-        get date and error rate which is higher than 0.01
-    '''
 
     query = ("select date, error_rate from error_rate_view where " +
              " error_rate > 0.01")
@@ -86,11 +76,8 @@ def get_high_error_rate_info():
 
 
 def show_high_error_rate_info():
+    """Format result and shows date and error rate which is more than 1%."""
     rows = get_high_error_rate_info()
-
-    '''
-        format result and shows date and error rate which is more than 1%
-    '''
 
     print "Error Rate Greater Than 1%"
     print "--------------------------"
@@ -105,16 +92,19 @@ def show_high_error_rate_info():
 
 
 def connect_database():
+    """Connect to database and return a database connection."""
     db = psycopg2.connect(database=DBName)
     c = db.cursor()
     return db, c
 
 
 def close_database(db):
+    """Close a database connection."""
     db.close()
 
 
 def run_sql_file(filename):
+    """Read sql file and execute queries."""
     db, c = connect_database()
     file = open(filename, 'r')
     sql = " ".join(file.readlines())
