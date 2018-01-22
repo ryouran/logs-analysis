@@ -16,9 +16,10 @@ def get_top_three_articles():
     """Connect to a database and get the most popular three articles."""
     db, c = connect_database()
 
-    query = ("select articles.title, count(*) as num from articles, log " +
-             "where articles.slug = split_part(log.path,  '/article/', 2)" +
-             " group by articles.title order by num desc limit 3")
+    query = ("""select articles.title, count(*) as num from articles,
+         log where log.path = concat('/article/', articles.slug) and
+         log.status='200 OK' group by articles.title order by num
+         desc limit 3""")
 
     c.execute(query)
     results = c.fetchall()
@@ -42,10 +43,10 @@ def get_popular_article_authors():
     """Connect to a database and get most popular article authors."""
     db, c = connect_database()
 
-    query = ("select authors.name, count(*) as num from articles, authors, " +
-             " log where articles.author = authors.id and articles.slug = " +
-             "split_part(log.path,  '/article/', 2) group by authors.name " +
-             "order by num desc")
+    query = ("""select authors.name, count(*) as num from articles, authors,
+                log where articles.author=authors.id and log.status='200 OK'
+                and log.path=concat('/article/', articles.slug) group by
+                authors.name order by num desc""")
 
     c.execute(query)
     results = c.fetchall()
@@ -69,13 +70,13 @@ def get_high_error_rate_info():
     """Connect to a database and get date and error rate (>0.01)."""
     db, c = connect_database()
 
-    query = ("select date, error_rate from error_rate_view where " +
-             " error_rate > 0.01")
+    query = ("""select date, error_rate from error_rate_view where
+             error_rate > 0.01""")
 
     c.execute(query)
     results = c.fetchall()
     close_database(db)
-    return results;
+    return results
 
 
 def show_high_error_rate_info():
@@ -113,6 +114,7 @@ def run_sql_file(filename):
     sql = " ".join(file.readlines())
     c.execute(sql)
     db.commit()
+    close_database(db)
 
 
 # run sql file to create a view 'error_rate_view'
