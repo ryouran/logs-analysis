@@ -34,8 +34,8 @@ def show_top_three_articles():
     print "Top Three Articles "
     print "---------------------"
 
-    for row in rows:
-        print '\'{0}\' - {1} views'.format(*row)
+    for title, num in rows:
+        print '\'{0}\' - {1} views'.format(title, num)
     print "\n"
 
 
@@ -61,8 +61,8 @@ def show_popular_article_authors():
     print "Most Popular Article Authors "
     print "-----------------------------"
 
-    for row in rows:
-        print '{0} - {1} views'.format(*row)
+    for name, num in rows:
+        print '{0} - {1} views'.format(name, num)
     print "\n"
 
 
@@ -86,12 +86,8 @@ def show_high_error_rate_info():
     print "Error Rate Greater Than 1%"
     print "--------------------------"
 
-    for row in rows:
-        date = datetime.strptime('{0}'.format(*row), '%Y-%m-%d')
-        error_rate = float('{1}'.format(*row))
-        print '{0} - {1} error'.format(
-            date.strftime('%B %d, %Y'),
-            "{:.1%}".format(error_rate))
+    for err_date, err_pct in rows:
+        print ("{:%B %d, %Y} - {:.1%} error ".format(err_date, err_pct))
     print "\n"
 
 
